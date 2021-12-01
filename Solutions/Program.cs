@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using AdventOfCodeCore;
 
 namespace Solutions
 {
@@ -6,7 +8,12 @@ namespace Solutions
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string[] fileContent = File.ReadAllLines(@"Inputs/Day1.txt");
+
+            ISolution<int> solutions = new Day1();
+
+            Console.WriteLine(solutions.Part1(fileContent));
+            // Console.WriteLine(solutions.Part2(fileContent));
         }
     }
 }
