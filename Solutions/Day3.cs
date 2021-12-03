@@ -1,4 +1,6 @@
+using System;
 using AdventOfCodeCore;
+using Solutions.Services;
 
 namespace Solutions
 {
@@ -6,7 +8,8 @@ namespace Solutions
     {
         public int Part1(string[] fileContent)
         {
-            throw new System.NotImplementedException();
+            var machine = new BinaryDiagnosticMachine();
+            return machine.CalculatePowerConsumption(fileContent);
         }
 
         public int Part2(string[] fileContent)

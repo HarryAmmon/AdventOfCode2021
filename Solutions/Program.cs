@@ -13,7 +13,7 @@ namespace Solutions
             ISolution<int> solutions = new Day3();
 
             Console.WriteLine(solutions.Part1(fileContent));
-            Console.WriteLine(solutions.Part2(fileContent));
+            // Console.WriteLine(solutions.Part2(fileContent));
         }
     }
 }
