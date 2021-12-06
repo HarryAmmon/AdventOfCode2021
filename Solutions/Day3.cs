@@ -14,7 +14,8 @@ namespace Solutions
 
         public int Part2(string[] fileContent)
         {
-            throw new System.NotImplementedException();
+            var machine = new BinaryDiagnosticMachine();
+            return machine.CalculateLifeSupportRating(fileContent);
         }
     }
 }

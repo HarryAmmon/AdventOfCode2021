@@ -1,5 +1,7 @@
 using System;
 using Solutions.Models;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Solutions.Services
 {
@@ -20,12 +22,28 @@ namespace Solutions.Services
 
         private int CalculateCO2ScrubbingRating(string[] report)
         {
-            throw new NotImplementedException();
+            List<string> filteredArray = report.ToList();
+            int position = 0;
+            while (filteredArray.Count != 1)
+            {
+                char leastCommonBit = FindLeastCommonBit(filteredArray, position);
+                filteredArray = filteredArray.Where(x => x[position] == leastCommonBit).ToList();
+                position++;
+            }
+            return Convert.ToInt32(filteredArray[0], 2);
         }
 
         private int CalculateO2Rating(string[] report)
         {
-            throw new NotImplementedException();
+            List<string> filteredArray = report.ToList();
+            int position = 0;
+            while (filteredArray.Count != 1)
+            {
+                char mostCommonBit = FindMostCommonBit(filteredArray, position);
+                filteredArray = filteredArray.Where(x => x[position] == mostCommonBit).ToList();
+                position++;
+            }
+            return Convert.ToInt32(filteredArray[0], 2);
         }
 
         private int CalculateGammaRate(string[] report)
@@ -47,26 +65,33 @@ namespace Solutions.Services
             return Convert.ToInt32(binaryNumber, 2);
         }
 
-        private char FindMostCommonBit(string[] report, int position)
+        private char FindMostCommonBit(IEnumerable<string> report, int position)
         {
             var bits = CountBits(report, position);
             if (bits.Zeros > bits.Ones)
             {
                 return '0';
             }
-            else return '1';
+            else if (bits.Zeros <= bits.Ones)
+            {
+                return '1';
+            }
+            else
+            {
+                return 'X';
+            }
         }
 
-        private char FindLeastCommonBit(string[] report, int position)
+        private char FindLeastCommonBit(IEnumerable<string> report, int position)
         {
             var bits = CountBits(report, position);
-            if (bits.Zeros < bits.Ones)
+            if (bits.Zeros <= bits.Ones)
             {
                 return '0';
             }
             else return '1';
         }
-        private Bits CountBits(string[] report, int position)
+        private Bits CountBits(IEnumerable<string> report, int position)
         {
             var bits = new Bits();
             foreach (var line in report)
