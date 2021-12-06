@@ -11,8 +11,24 @@ namespace Solutions.Services
             int epsilonRate = CalculateEpsilonRate(report);
             return gammaRate * epsilonRate;
         }
+        public int CalculateLifeSupportRating(string[] report)
+        {
+            int o2Rating = CalculateO2Rating(report);
+            int co2ScrubbingRating = CalculateCO2ScrubbingRating(report);
+            return o2Rating * co2ScrubbingRating;
+        }
 
-        public int CalculateGammaRate(string[] report)
+        private int CalculateCO2ScrubbingRating(string[] report)
+        {
+            throw new NotImplementedException();
+        }
+
+        private int CalculateO2Rating(string[] report)
+        {
+            throw new NotImplementedException();
+        }
+
+        private int CalculateGammaRate(string[] report)
         {
             string binaryNumber = "";
             for (int i = 0; i < report[0].Length; i++)
@@ -21,15 +37,12 @@ namespace Solutions.Services
             }
             return Convert.ToInt32(binaryNumber, 2);
         }
-
-        public int CalculateEpsilonRate(string[] report)
+        private int CalculateEpsilonRate(string[] report)
         {
             string binaryNumber = "";
             for (int i = 0; i < report[0].Length; i++)
             {
-
                 binaryNumber += FindLeastCommonBit(report, i);
-
             }
             return Convert.ToInt32(binaryNumber, 2);
         }
@@ -53,7 +66,7 @@ namespace Solutions.Services
             }
             else return '1';
         }
-        public Bits CountBits(string[] report, int position)
+        private Bits CountBits(string[] report, int position)
         {
             var bits = new Bits();
             foreach (var line in report)
