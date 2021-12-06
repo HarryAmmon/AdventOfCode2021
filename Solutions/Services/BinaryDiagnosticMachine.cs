@@ -72,13 +72,9 @@ namespace Solutions.Services
             {
                 return '0';
             }
-            else if (bits.Zeros <= bits.Ones)
-            {
-                return '1';
-            }
             else
             {
-                return 'X';
+                return '1';
             }
         }
 
