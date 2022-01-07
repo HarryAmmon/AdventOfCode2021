@@ -26,7 +26,7 @@ namespace Solutions.Services
                     {
                         if (!string.IsNullOrWhiteSpace(line))
                         {
-                            card[cardRow].Add(int.Parse(line));
+                            card[cardRow].Add(new BingoSquare(int.Parse(line)));
                         }
                     }
                     cardRow++;
@@ -37,6 +37,16 @@ namespace Solutions.Services
                 }
             }
             return bingoCards;
+        }
+        public IEnumerable<int> GenerateNumbers(string numbers)
+        {
+            var intNumbers = new List<int>();
+            var stringNumbers = numbers.Split(',');
+            foreach (var number in stringNumbers)
+            {
+                intNumbers.Add(int.Parse(number));
+            }
+            return intNumbers;
         }
     }
 }

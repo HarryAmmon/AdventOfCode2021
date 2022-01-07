@@ -9,7 +9,10 @@ namespace Solutions
         {
             var factory = new BingoCardFactory();
             var cards = factory.GenerateBingoCards(fileContent);
-            return -1;
+            var numbers = factory.GenerateNumbers(fileContent[0]);
+            var machine = new BingoMachine(numbers, cards);
+
+            return machine.CalculateWinningTicketScore();
         }
 
         public int Part2(string[] fileContent)
