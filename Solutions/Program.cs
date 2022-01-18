@@ -8,9 +8,9 @@ namespace Solutions
     {
         static void Main(string[] args)
         {
-            string[] fileContent = File.ReadAllLines(@"Inputs/Day3.txt");
+            string[] fileContent = File.ReadAllLines(@"Inputs/Day4.txt");
 
-            ISolution<int> solutions = new Day3();
+            ISolution<int> solutions = new Day4();
 
             Console.WriteLine(solutions.Part1(fileContent));
             Console.WriteLine(solutions.Part2(fileContent));
