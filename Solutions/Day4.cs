@@ -12,12 +12,17 @@ namespace Solutions
             var numbers = factory.GenerateNumbers(fileContent[0]);
             var machine = new BingoMachine(numbers, cards);
 
-            return machine.CalculateWinningTicketScore();
+            return machine.CalculateFirstWinningTicketScore();
         }
 
         public int Part2(string[] fileContent)
         {
-            throw new System.NotImplementedException();
+            var factory = new BingoCardFactory();
+            var cards = factory.GenerateBingoCards(fileContent);
+            var numbers = factory.GenerateNumbers(fileContent[0]);
+            var machine = new BingoMachine(numbers, cards);
+
+            return machine.CalculateLastWinningTicketScore();
         }
     }
 }

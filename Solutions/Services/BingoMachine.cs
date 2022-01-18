@@ -7,30 +7,40 @@ namespace Solutions.Services
     public class BingoMachine
     {
         private readonly List<int> _numbers;
-        private readonly IEnumerable<BingoCard> _cards;
+        private readonly List<BingoCard> _cards;
+        private readonly List<BingoCard> _winningCards;
         public BingoMachine(IEnumerable<int> numbers, IEnumerable<BingoCard> cards)
         {
-            _cards = cards;
+            _cards = new List<BingoCard>(cards);
             _numbers = new List<int>(numbers);
+            _winningCards = new List<BingoCard>();
         }
 
         public int CalculateFirstWinningTicketScore()
         {
             for (int i = 0; i < _numbers.Count; i++)
             {
-                BingoCard winningCard;
-
                 MarkCards(_numbers[i]);
-                if (CheckCards(out winningCard))
+                CheckForWinningCards(_numbers[i]);
+
+                if (_winningCards.Count >= 1)
                 {
-                    return CalculateScore(winningCard, _numbers[i]);
+                    return CalculateScore(_winningCards[0]);
                 }
             }
-
             return -1;
         }
 
-        private int CalculateScore(BingoCard card, int winningNumber)
+        public int CalculateLastWinningTicketScore()
+        {
+            for (int i = 0; i < _numbers.Count; i++)
+            {
+                MarkCards(_numbers[i]);
+                CheckForWinningCards(_numbers[i]);
+            }
+            return CalculateScore(_winningCards[_winningCards.Count - 1]);
+        }
+        private int CalculateScore(BingoCard card)
         {
             int UnmarkedCardsTotal = 0;
             foreach (var row in card)
@@ -43,25 +53,31 @@ namespace Solutions.Services
                     }
                 }
             }
-
-            return UnmarkedCardsTotal * winningNumber;
+            int winningScore = UnmarkedCardsTotal * card.WinningNumber;
+            card.Score = winningScore;
+            return winningScore;
         }
 
-        public bool CheckCards(out BingoCard winningCard)
+        public List<BingoCard> CheckForWinningCards(int currentNumber)
         {
-            winningCard = null;
+            List<BingoCard> cardsToRemove = new List<BingoCard>();
             foreach (var card in _cards)
             {
                 for (int i = 0; i < card.Count; i++)
                 {
                     if (CheckColumn(card, i) || CheckRow(card, i))
                     {
-                        winningCard = card;
-                        return true;
+                        card.WinningNumber = currentNumber;
+                        _winningCards.Add(card);
+                        cardsToRemove.Add(card);
                     }
                 }
             }
-            return false;
+            foreach (var card in cardsToRemove)
+            {
+                _cards.Remove(card);
+            }
+            return _winningCards;
         }
 
         public void MarkCards(int number)
