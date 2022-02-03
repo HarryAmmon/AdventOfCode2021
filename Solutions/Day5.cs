@@ -22,7 +22,7 @@ namespace Solutions
                 }
             }
             var plotter = new Plotter();
-            plotter.PlotPoints(coords);
+            return plotter.PlotPoints(coords);
 
 
             throw new System.NotImplementedException();

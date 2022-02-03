@@ -5,7 +5,7 @@ namespace Solutions.Services
 {
     public class Plotter
     {
-        public List<List<int>> PlotPoints(List<int[]> points)
+        public int PlotPoints(List<int[]> points)
         {
             // List<int[]> points = new List<int[]>()
             // {
@@ -20,8 +20,7 @@ namespace Solutions.Services
             // 0 1 0 0 0 0
             // 0 1 0 0 0 0
 
-            List<List<int>> map = new List<List<int>>();
-
+            
             // Find the largest x value, add that number of 0 to array
             // Find the largest y value, add that number of List<int> with largest x value of zeros change
 
@@ -46,17 +45,8 @@ namespace Solutions.Services
                     largestY = coords[3];
                 }
             }
-            for (int i = 0; i < largestY; i++)
-            {
-                map.Add(new List<int>());
-                for (int j = 0; j < largestX; j++)
-                {
-                    map[i].Add(0);
-                }
-            }
 
-            Console.WriteLine(map.Count);
-            Console.WriteLine(map[500].Count);
+            var map = CreateBlankMap(largestX, largestY);
 
             foreach (var coords in points)
             {
@@ -65,7 +55,48 @@ namespace Solutions.Services
                 int x2 = coords[2];
                 int y2 = coords[3];
 
-                // 
+                if(x1 == x2)
+                {
+                    // if the x coords are the same, just loop through the y coords
+                    for(int i = y1; i<= y2; i++)
+                    {
+                        map[x1][i]++;
+                    }
+                } else if(y1 == y2)
+                {
+                    for (int i = x1; i <= x2; i++)
+                    {
+                        map[y1][i]++;
+                    }
+                }
+            }
+
+            int count = 0;
+            foreach(var row in map)
+            {
+                foreach(int item in row)
+                {
+                    if(item >= 2)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        private List<List<int>> CreateBlankMap(int largestX, int largestY)
+        {
+            var map = new List<List<int>>();
+
+            for (int i = 0; i <= largestY; i++)
+            {
+                map.Add(new List<int>());
+                for (int j = 0; j <= largestX; j++)
+                {
+                    map[i].Add(0);
+                }
             }
 
             return map;

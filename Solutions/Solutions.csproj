@@ -4,6 +4,12 @@
     <ProjectReference Include="..\AdventOfCodeCore\AdventOfCodeCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Inputs\Day5.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
